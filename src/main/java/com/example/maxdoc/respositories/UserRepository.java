@@ -1,6 +1,6 @@
 package com.example.maxdoc.respositories;
 
-import com.example.maxdoc.enitites.User;
+import com.example.maxdoc.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

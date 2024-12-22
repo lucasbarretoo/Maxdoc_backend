@@ -1,8 +1,8 @@
 package com.example.maxdoc.services;
 
-import com.example.maxdoc.dto.DocumentVersionDTO;
-import com.example.maxdoc.enitites.Document;
+import com.example.maxdoc.entities.Document;
 import com.example.maxdoc.respositories.DocumentRepository;
+import com.example.maxdoc.respositories.DocumentVersionRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,13 +12,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class DocumentService {
+
     private final DocumentRepository documentRepository;
-    private final DocumentVersionService documentVersionService;
 
+    private final DocumentVersionRepository documentVersionRepository;
 
-    public DocumentService(DocumentRepository documentRepository, DocumentVersionService documentVersionService) {
+    public DocumentService(DocumentRepository documentRepository, DocumentVersionRepository documentVersionRepository) {
         this.documentRepository = documentRepository;
-        this.documentVersionService = documentVersionService;
+        this.documentVersionRepository = documentVersionRepository;
     }
 
     public List<Document> findAll() {
@@ -42,17 +43,25 @@ public class DocumentService {
     }
 
     public void delete(Integer id) {
-        documentRepository.findById(id)
-            .map(document -> {
-                document.getVersions().stream()
-                    .map(version -> {
 
-                        documentVersionService.delete(version.getId());
-                        return Void.TYPE;
-                    })
-                    .collect(Collectors.toList());
-                documentRepository.delete(document);
-                return Void.TYPE;
-            }).orElseThrow( () -> new ResponseStatusException( HttpStatus.NOT_FOUND)  );
+        boolean docExists = documentRepository.existsById(id);
+
+        if (docExists) {
+
+            documentRepository.findById(id)
+                .map(document -> {
+                    document.getVersions().stream()
+                            .map(version -> {
+                                documentVersionRepository.deleteById(version.getId());
+                                return Void.TYPE;
+                            })
+                            .collect(Collectors.toList());
+                    return Void.TYPE;
+                });
+                documentRepository.deleteById(id);
+
+        } else {
+            throw new ResponseStatusException( HttpStatus.NOT_FOUND, "Document não encontrado" );
+        }
     }
 }

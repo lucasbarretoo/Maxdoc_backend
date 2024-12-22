@@ -1,6 +1,6 @@
 package com.example.maxdoc.controllers;
 
-import com.example.maxdoc.enitites.User;
+import com.example.maxdoc.entities.User;
 import com.example.maxdoc.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

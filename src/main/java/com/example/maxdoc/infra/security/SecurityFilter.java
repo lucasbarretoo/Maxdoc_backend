@@ -1,6 +1,6 @@
 package com.example.maxdoc.infra.security;
 
-import com.example.maxdoc.enitites.User;
+import com.example.maxdoc.entities.User;
 import com.example.maxdoc.services.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

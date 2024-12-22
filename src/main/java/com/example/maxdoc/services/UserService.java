@@ -1,6 +1,6 @@
 package com.example.maxdoc.services;
 
-import com.example.maxdoc.enitites.User;
+import com.example.maxdoc.entities.User;
 import com.example.maxdoc.respositories.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -45,10 +45,14 @@ public class UserService {
     }
 
     public void delete(Integer id) {
-        userRepository.findById(id)
-            .map(user -> {
-                userRepository.delete(user);
-                return Void.TYPE;
-            }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        boolean userExists = userRepository.existsById(id);
+
+        if (userExists) {
+
+            userRepository.deleteById(id);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 }

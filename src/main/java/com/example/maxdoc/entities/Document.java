@@ -1,4 +1,4 @@
-package com.example.maxdoc.enitites;
+package com.example.maxdoc.entities;
 
 import jakarta.persistence.*;
 

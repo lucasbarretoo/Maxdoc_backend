@@ -1,4 +1,4 @@
-package com.example.maxdoc.enitites;
+package com.example.maxdoc.entities;
 
 import jakarta.persistence.*;
 
@@ -18,6 +18,15 @@ public class User {
 
     @Column(nullable = false, unique = true)
     private String email;
+
+    public User() {}
+
+    public User(Integer id, String name, String password, String email) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.email = email;
+    }
 
     public Integer getId() {
         return id;

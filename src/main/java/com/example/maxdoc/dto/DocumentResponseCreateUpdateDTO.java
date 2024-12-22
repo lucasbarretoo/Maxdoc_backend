@@ -1,6 +1,6 @@
 package com.example.maxdoc.dto;
 
-public record DocumentResponseCreateDto(
+public record DocumentResponseCreateUpdateDTO(
     String title,
     String abbrev,
     String description,

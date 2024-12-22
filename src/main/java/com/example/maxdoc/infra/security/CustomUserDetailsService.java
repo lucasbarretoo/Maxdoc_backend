@@ -1,6 +1,6 @@
 package com.example.maxdoc.infra.security;
 
-import com.example.maxdoc.enitites.User;
+import com.example.maxdoc.entities.User;
 import com.example.maxdoc.respositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

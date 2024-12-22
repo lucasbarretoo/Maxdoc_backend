@@ -1,6 +1,7 @@
 package com.example.maxdoc.services;
 
-import com.example.maxdoc.enitites.DocumentVersion;
+import com.example.maxdoc.entities.Document;
+import com.example.maxdoc.entities.DocumentVersion;
 import com.example.maxdoc.respositories.DocumentVersionRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,20 +18,19 @@ public class DocumentVersionService {
         this.documentVersionRepository = documentVersionRepository;
     }
 
-    public List<DocumentVersion> findAll() {
-        return documentVersionRepository.findAll();
-    }
-
     public DocumentVersion save(DocumentVersion documentVersion) {
         return documentVersionRepository.save(documentVersion);
     }
 
-    public void delete(Integer id) {
-        documentVersionRepository.findById(id)
-            .map(document -> {
-                documentVersionRepository.delete(document);
-                return Void.TYPE;
-            }).orElseThrow( () -> new ResponseStatusException( HttpStatus.NOT_FOUND)  );
+    public DocumentVersion update(Integer id, DocumentVersion documentVersion) {
+        return documentVersionRepository.findById(id)
+            .map(version -> {
+                version.setPhase(documentVersion.getPhase());
+                return documentVersionRepository.save(version);
+            }).orElseThrow(() -> new ResponseStatusException( HttpStatus.NOT_FOUND)  );
     }
 
+    public List<DocumentVersion> getOrderedVersionsByDocumentId(Integer documentId) {
+        return documentVersionRepository.findVersionsByDocumentIdOrderByVersion(documentId);
+    }
 }

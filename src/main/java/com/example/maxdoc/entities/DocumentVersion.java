@@ -1,8 +1,7 @@
-package com.example.maxdoc.enitites;
+package com.example.maxdoc.entities;
 
 import jakarta.persistence.*;
-
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(
@@ -27,8 +26,8 @@ public class DocumentVersion {
     @Column(nullable = false, columnDefinition = "VARCHAR(20) CHECK (phase IN ('Minuta', 'Vigente', 'Obsoleto'))")
     private String phase;
 
-    @Column(nullable = false)
-    private final Timestamp createdAt = new Timestamp(System.currentTimeMillis());
+    @Column(nullable = false, name = "created_at")
+    private final LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "document_id")
@@ -95,5 +94,9 @@ public class DocumentVersion {
 
     public void setDocument(Document document) {
         this.document = document;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 }

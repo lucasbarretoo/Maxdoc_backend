@@ -1,7 +1,5 @@
 package com.example.maxdoc.dto;
 
-import com.example.maxdoc.enitites.DocumentVersion;
-
 import java.util.List;
 
 public record DocumentDTO(
